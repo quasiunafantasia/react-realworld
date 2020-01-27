@@ -14,8 +14,6 @@ const selectArticles = state => state.articles;
 export const HomeContainer = () => {
   const dispatch = useDispatch();
   const tags = useSelector(selectTags);
-  // const [tags, setTags] = useState([]);
-  // const [articles, setArticles] = useState([]);
   const articles = useSelector(selectArticles);
 
   const [selectedTag, selectTag] = useState(null);
@@ -68,7 +66,7 @@ export const HomeContainer = () => {
         selectedFeed
       }}
     >
-      <Home tags={tags} articles={articles} />
+      <Home articles={articles} />
     </HomePageContext.Provider>
   );
 };

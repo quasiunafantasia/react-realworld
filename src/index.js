@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { configureStore } from '@reduxjs/toolkit';
-import homeSlice from './pages/Home/home.slice';
+import homeSlice from './Pages/Home/home.slice';
 import { Provider } from 'react-redux';
 
 const store = configureStore({
