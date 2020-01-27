@@ -5,10 +5,19 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import { useMemo } from 'react';
 import HomePageContext from './homePageContext';
+import { useDispatch, useSelector } from 'react-redux';
+import homeSlice from './home.slice';
+
+const selectTags = state => state.tags;
+const selectArticles = state => state.articles;
 
 export const HomeContainer = () => {
-  const [tags, setTags] = useState([]);
-  const [articles, setArticles] = useState([]);
+  const dispatch = useDispatch();
+  const tags = useSelector(selectTags);
+  // const [tags, setTags] = useState([]);
+  // const [articles, setArticles] = useState([]);
+  const articles = useSelector(selectArticles);
+
   const [selectedTag, selectTag] = useState(null);
 
   const feeds = useMemo(() => {
@@ -29,7 +38,7 @@ export const HomeContainer = () => {
       const response = await axios.get(
         'https://conduit.productionready.io/api/tags'
       );
-      setTags(response.data.tags);
+      dispatch(homeSlice.actions.setTags(response.data.tags));
     })();
   }, []);
 
@@ -44,7 +53,7 @@ export const HomeContainer = () => {
         ? `https://conduit.productionready.io/api/articles?tag=${selectedFeedValue}`
         : 'https://conduit.productionready.io/api/articles';
       const response = await axios.get(url);
-      setArticles(response.data.articles);
+      dispatch(homeSlice.actions.setArticles(response.data.articles));
     })();
   }, [selectedFeedValue]);
 
