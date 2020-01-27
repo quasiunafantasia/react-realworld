@@ -1,23 +1,34 @@
 import 'react';
 import * as React from 'react';
+import { useContext } from 'react';
+import HomePageContext from '../homePageContext';
 
-export const FeedSelector = ({feeds, activeFeed, selectFeed}) => {
-    const createSelectFeed = feed => e => {
-        e.preventDefault();
-        selectFeed(feed);
-    };
+export const FeedSelector = () => {
+  const { feeds, selectedFeed, selectFeed } = useContext(HomePageContext);
 
-    return <div className="feed-toggle">
-        <ul className="nav nav-pills outline-active">
-            {feeds.map(feed => (
-                <li className="nav-item" key={feed} >
-                    <a
-                        className={"nav-link " + (activeFeed === feed ? 'active': '')}
-                       href="/"
-                        onClick={createSelectFeed(feed)}
-                    >{feed}</a>
-                </li>
-            ))}
-        </ul>
+  const createSelectFeed = feed => e => {
+    e.preventDefault();
+    selectFeed(feed);
+  };
+
+  return (
+    <div className="feed-toggle">
+      <ul className="nav nav-pills outline-active">
+        {feeds.map(feed => (
+          <li className="nav-item" key={feed.value}>
+            <a
+              className={
+                'nav-link ' +
+                (selectedFeed.value === feed.value ? 'active' : '')
+              }
+              href="/"
+              onClick={createSelectFeed(feed)}
+            >
+              {feed.name}
+            </a>
+          </li>
+        ))}
+      </ul>
     </div>
-}
+  );
+};
