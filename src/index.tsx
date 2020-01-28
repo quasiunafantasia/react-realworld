@@ -2,13 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import { rootReducer } from './reducer';
 import * as serviceWorker from './serviceWorker';
 import { configureStore } from '@reduxjs/toolkit';
-import homeSlice from './Pages/Home/home.slice';
 import { Provider } from 'react-redux';
 
 const store = configureStore({
-  reducer: homeSlice.reducer
+  reducer: rootReducer
 });
 
 ReactDOM.render(

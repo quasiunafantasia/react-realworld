@@ -1,62 +1,70 @@
 import * as React from 'react';
 import { useState } from 'react';
+import { articlesSlice } from '../../entities/articles/articles.slice';
+import { tagsSlice } from '../../entities/tags/tags.slice';
+import { RootState } from '../../reducer';
+import { Maybe } from '../../utils/types/Maybe';
 import { Home } from './Home';
 import { useEffect } from 'react';
 import axios from 'axios';
 import { useMemo } from 'react';
-import HomePageContext from './homePageContext';
+import { context, Feed } from './homePageContext';
 import { useDispatch, useSelector } from 'react-redux';
-import homeSlice from './home.slice';
 
-const selectTags = state => state.tags;
-const selectArticles = state => state.articles;
+const selectTags = (state: RootState) => state.tags;
+const selectArticles = (state: RootState) =>
+  state.articles.ids.map(id => state.articles.byId[id]);
 
 export const HomeContainer = () => {
   const dispatch = useDispatch();
   const tags = useSelector(selectTags);
   const articles = useSelector(selectArticles);
 
-  const [selectedTag, selectTag] = useState(null);
+  const [selectedTag, selectTag] = useState<Maybe<string>>();
 
-  const feeds = useMemo(() => {
+  const feeds = useMemo<Feed[]>(() => {
     const defaultFeed = {
       name: 'Global feed',
       value: null
     };
-    if (!selectedTag) return [defaultFeed];
+    if (!selectedTag) {
+      return [defaultFeed];
+    }
 
     const tagFeed = { name: selectedTag, value: selectedTag };
     return [defaultFeed, tagFeed];
   }, [selectedTag]);
 
-  const [selectedFeed, selectFeed] = useState([feeds.length - 1]);
+  const [selectedFeed, selectFeed] = useState<Feed['value']>(
+    feeds[feeds.length - 1].value
+  );
 
   useEffect(() => {
+    // @ts-ignore
     (async () => {
       const response = await axios.get(
         'https://conduit.productionready.io/api/tags'
       );
-      dispatch(homeSlice.actions.setTags(response.data.tags));
+      dispatch(tagsSlice.actions.setTags(response.data.tags));
     })();
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
-    selectFeed(feeds[feeds.length - 1]);
+    selectFeed(feeds[feeds.length - 1].value);
   }, [feeds]);
 
-  const selectedFeedValue = selectedFeed.value;
   useEffect(() => {
     (async () => {
-      const url = selectedFeedValue
-        ? `https://conduit.productionready.io/api/articles?tag=${selectedFeedValue}`
+      const url = selectedFeed
+        ? `https://conduit.productionready.io/api/articles?tag=${selectedFeed}`
         : 'https://conduit.productionready.io/api/articles';
       const response = await axios.get(url);
-      dispatch(homeSlice.actions.setArticles(response.data.articles));
+      dispatch(articlesSlice.actions.setEntity(response.data.articles));
     })();
-  }, [selectedFeedValue]);
+  }, [selectedFeed, dispatch]);
 
   return (
-    <HomePageContext.Provider
+    <context.Provider
       value={{
         feeds,
         tags,
@@ -67,6 +75,6 @@ export const HomeContainer = () => {
       }}
     >
       <Home articles={articles} />
-    </HomePageContext.Provider>
+    </context.Provider>
   );
 };

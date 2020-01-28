@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { Header } from './components/header';
-import { FeedSelector } from './components/feedSelector';
+import { Article } from '../../entities/articles/article.interface';
+import { Header } from './components/Header';
+import { FeedSelector } from './components/FeedSelector';
 import { ArticlePreview } from './components/ArticlePreview';
 import { TagList } from './components/TagList';
 
-export const Home = ({ articles }) => {
+export const Home = ({ articles }: { articles: Article[] }) => {
   return (
     <div className="home-page">
       <Header />
