@@ -1,25 +1,41 @@
+import { createSelector } from '@reduxjs/toolkit';
 import * as React from 'react';
-import { useState } from 'react';
-import { articlesSlice } from '../../entities/articles/articles.slice';
-import { tagsSlice } from '../../entities/tags/tags.slice';
-import { RootState } from '../../reducer';
+import { useCallback, useState } from 'react';
+import { RootState } from '../../store';
 import { Maybe } from '../../utils/types/Maybe';
 import { Home } from './Home';
 import { useEffect } from 'react';
-import axios from 'axios';
 import { useMemo } from 'react';
+import { fetchArticles, fetchTags } from './home.actions';
+import { getSelectedArticles, homeSlice } from './home.slice';
 import { context, Feed } from './homePageContext';
 import { useDispatch, useSelector } from 'react-redux';
 
 const selectTags = (state: RootState) => state.tags;
-const selectArticles = (state: RootState) =>
-  state.articles.ids.map(id => state.articles.byId[id]);
+
+const getSelectedArticlesFromRoot = (state: RootState) =>
+  getSelectedArticles(state.home);
+
+const getVisibleArticles = createSelector(
+  getSelectedArticlesFromRoot,
+  (state: RootState) => state.articles.byId,
+  (ids, map) => {
+    return (ids && ids.map(id => map[id])) || [];
+  }
+);
 
 export const HomeContainer = () => {
   const dispatch = useDispatch();
   const tags = useSelector(selectTags);
-  const articles = useSelector(selectArticles);
+  const articles = useSelector(getVisibleArticles);
 
+  const selectedFeed = useSelector(
+    (state: RootState) => state.home.selectedFeed
+  );
+  const selectFeed = useCallback(
+    feed => dispatch(homeSlice.actions.selectFeed(feed)),
+    [dispatch]
+  );
   const [selectedTag, selectTag] = useState<Maybe<string>>();
 
   const feeds = useMemo<Feed[]>(() => {
@@ -35,32 +51,17 @@ export const HomeContainer = () => {
     return [defaultFeed, tagFeed];
   }, [selectedTag]);
 
-  const [selectedFeed, selectFeed] = useState<Feed['value']>(
-    feeds[feeds.length - 1].value
-  );
-
   useEffect(() => {
-    // @ts-ignore
-    (async () => {
-      const response = await axios.get(
-        'https://conduit.productionready.io/api/tags'
-      );
-      dispatch(tagsSlice.actions.setTags(response.data.tags));
-    })();
+    dispatch(fetchTags());
   }, [dispatch]);
 
   useEffect(() => {
-    selectFeed(feeds[feeds.length - 1].value);
-  }, [feeds]);
+    //todo fix typing
+    dispatch(homeSlice.actions.selectFeed(feeds[feeds.length - 1].value));
+  }, [feeds, dispatch]);
 
   useEffect(() => {
-    (async () => {
-      const url = selectedFeed
-        ? `https://conduit.productionready.io/api/articles?tag=${selectedFeed}`
-        : 'https://conduit.productionready.io/api/articles';
-      const response = await axios.get(url);
-      dispatch(articlesSlice.actions.setEntity(response.data.articles));
-    })();
+    dispatch(fetchArticles(selectedFeed));
   }, [selectedFeed, dispatch]);
 
   return (

@@ -1,4 +1,15 @@
 import { Author } from '../author.interface';
+import { schema } from 'normalizr';
+
+export const articleSchema = new schema.Entity<Article>(
+  'articles',
+  {},
+  {
+    idAttribute: 'slug'
+  }
+);
+
+export const articlesSchema = new schema.Array(articleSchema);
 
 export interface Article {
   slug: string;
