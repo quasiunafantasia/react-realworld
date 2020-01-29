@@ -13,6 +13,7 @@ export const fetchArticles = (
   const url = tag
     ? `https://conduit.productionready.io/api/articles?tag=${tag}`
     : 'https://conduit.productionready.io/api/articles';
+
   const response = await apiClient.get(url);
   // @ts-ignore
   const nomalized = normalize(response.data.articles, articlesSchema);
