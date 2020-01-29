@@ -15,9 +15,8 @@ export const fetchArticles = (
     : 'https://conduit.productionready.io/api/articles';
 
   const response = await apiClient.get(url);
-  // @ts-ignore
   const nomalized = normalize(response.data.articles, articlesSchema);
-  // @ts-ignore
+
   dispatch(articlesSlice.actions.setEntity(response.data.articles));
   dispatch(
     homeSlice.actions.setArticlesByFeed(nomalized.result, {
