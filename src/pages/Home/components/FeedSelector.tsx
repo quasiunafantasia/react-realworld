@@ -1,12 +1,18 @@
 import 'react';
 import { MouseEvent } from 'react';
 import * as React from 'react';
-import { useContext } from 'react';
-import { context, Feed } from '../homePageContext';
+import { Maybe } from '../../../utils/types/Maybe';
+import { Feed } from '../feed.type';
 
-export const FeedSelector = () => {
-  const { feeds, selectedFeed, selectFeed } = useContext(context);
-
+export const FeedSelector = ({
+  feeds,
+  selectedFeed,
+  selectFeed
+}: {
+  feeds: Feed[];
+  selectedFeed: Maybe<string>;
+  selectFeed: (feed: Maybe<string>) => any;
+}) => {
   const createSelectFeed = (feed: Feed) => (e: MouseEvent) => {
     e.preventDefault();
     if (selectFeed) {

@@ -1,11 +1,11 @@
-import { Record } from './types/Record';
+import { Dictionary } from './types/Dictionary';
 
-type RecordType<T> = T extends Record<infer K> ? K : T;
+type RecordType<T> = T extends Dictionary<infer K> ? K : T;
 
 export function mapRecord<T, F>(
-  object: Record<T>,
+  object: Dictionary<T>,
   mapper: (value: T, key?: string) => F
-): Record<F> {
+): Dictionary<F> {
   return Object.entries(object)
     .map(([key, value]) => [key, mapper(value, key)] as [string, F])
     .reduce(

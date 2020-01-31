@@ -1,14 +1,17 @@
 import 'react';
 import { MouseEvent } from 'react';
 import * as React from 'react';
-import { context } from '../homePageContext';
-import { useContext } from 'react';
 
-export const TagList = () => {
-  const { tags, selectTag } = useContext(context);
+export const TagList = ({
+  tags,
+  selectTag
+}: {
+  tags: string[];
+  selectTag: (tag: string) => any;
+}) => {
   const createOnTagClick = (tag: string) => (e: MouseEvent) => {
     e.preventDefault();
-    selectTag && selectTag(tag);
+    selectTag(tag);
   };
 
   return (

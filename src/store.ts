@@ -3,7 +3,7 @@ import { Action, combineReducers } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { articlesSlice } from './entities/articles/articles.slice';
 import { tagsSlice } from './entities/favourite-tags/tags.slice';
-import { homeSlice } from './pages/Home/home.slice';
+import { homeSlice } from './pages/Home/redux/home.slice';
 
 export const rootReducer = combineReducers({
   articles: articlesSlice.reducer,

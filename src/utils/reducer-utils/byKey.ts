@@ -1,26 +1,27 @@
+import { PrepareAction } from '@reduxjs/toolkit';
 import { Action, Reducer } from 'redux';
-import { Record } from '../types/Record';
+import { Maybe } from '../types/Maybe';
+import { Dictionary } from '../types/Dictionary';
 
-export type ActionWithKey<T extends Action = Action> = T & {
-  meta?: {
-    key?: string;
-  };
-};
+type Prepare<T> = (
+  ...args: any[]
+) => ReturnType<PrepareAction<T>> & { type: string };
 
-export const EMPTY_KEY = 'EMPTY_KEY';
+const defaultPrepare = <T, K>(x: T): K => x as K extends T ? K : never;
 
-export function byKey<T, K>(
-  reducer: Reducer<T, Action<K>>,
-  emptyKey: string = EMPTY_KEY
-): Reducer<Record<T>, Action<K>> {
-  const defaultState = reducer(void 0, ({ type: '' } as any) as Action<K>);
+export function byKey<T, K, PayloadBefore>(
+  reducer: Reducer<T>,
+  keySelector: (action: Action) => Maybe<string>,
+  prepare: Prepare<PayloadBefore> = defaultPrepare
+): Reducer<Dictionary<T>, Action> {
+  const defaultState = reducer(void 0, { type: '' } as any);
 
-  return (state: Record<T> = {}, action: ActionWithKey<Action<K>>) => {
-    if (action.meta && 'key' in action.meta) {
-      const key = action.meta.key || emptyKey;
+  return (state: Dictionary<T> = {}, action: Action) => {
+    const key = keySelector(action);
+    if (key) {
       return {
         ...state,
-        [key]: reducer(state[key] || defaultState, action)
+        [key]: reducer(state[key] || defaultState, prepare(action))
       };
     }
 
