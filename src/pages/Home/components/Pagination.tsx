@@ -33,6 +33,7 @@ export const Pagination = ({
             onClick={createHandler(page)}
             key={page}
           >
+            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
             <a className="page-link" href="">
               {page}
             </a>
@@ -42,5 +43,3 @@ export const Pagination = ({
     </nav>
   );
 };
-
-export default Pagination;

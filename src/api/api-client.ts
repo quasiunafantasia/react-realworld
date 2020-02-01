@@ -7,9 +7,20 @@ const delayBy = (delay: any, promise: any) => {
   return Promise.all([timer, promise]).then(([_, value]) => value);
 };
 
+const baseUrl = 'https://conduit.productionready.io/';
+const getFillUrl = (url: string) => (baseUrl + url).replace('//', '/');
+
 export const apiClient = {
-  get: (...args: any) => {
+  get: (url: string, ...rest: any) => {
     // @ts-ignore
-    return delayBy(DELAY, axios.get(...args));
+    return delayBy(DELAY, axios.get(getFillUrl(url), ...rest));
+  },
+  post: (url: string, ...rest: any) => {
+    // @ts-ignore
+    return delayBy(DELAY, axios.post(getFillUrl(url), ...rest));
+  },
+  put: (url: string, ...rest: any) => {
+    // @ts-ignore
+    return delayBy(DELAY, axios.put(getFillUrl(url), ...rest));
   }
 };

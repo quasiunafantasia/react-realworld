@@ -11,14 +11,14 @@ export const fetchArticles = (
   tag: Maybe<string>,
   page: number = 1
 ): AppThunk => async dispatch => {
-  //todo use constant for limit
+  //todo use constant for limit and move to service
   const offset = (20 * (page - 1)).toString();
   const searchParams = new URLSearchParams({ offset });
   if (tag) {
     searchParams.append('tag', tag);
   }
 
-  const url = `https://conduit.productionready.io/api/articles?${searchParams.toString()}`;
+  const url = `api/articles?${searchParams.toString()}`;
 
   const response = await apiClient.get(url);
   const nomalized = normalize(response.data.articles, articlesSchema);
@@ -33,8 +33,6 @@ export const fetchArticles = (
 };
 
 export const fetchTags = (): AppThunk => async dispatch => {
-  const response = await apiClient.get(
-    'https://conduit.productionready.io/api/tags'
-  );
+  const response = await apiClient.get('/api/tags');
   dispatch(tagsSlice.actions.setTags(response.data.tags));
 };
