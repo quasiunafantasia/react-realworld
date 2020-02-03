@@ -1,12 +1,16 @@
 import { Action, createAction, PayloadAction } from '@reduxjs/toolkit';
 import { byKey } from '../../../utils/reducer-utils/byKey';
+import {
+  createLoadingReducer,
+  Loading
+} from '../../../utils/reducer-utils/loading';
 import { Dictionary } from '../../../utils/types/Dictionary';
 
 type ArticlesState = string[];
 
 const defaultArticlesState: ArticlesState = [];
 
-type ArticlesByPageState = Dictionary<ArticlesState>;
+type ArticlesByPageState = Dictionary<Loading<ArticlesState>>;
 
 type FeedState = {
   total: number;
@@ -36,8 +40,40 @@ export const articlesReducer = (
   return defaultArticlesState;
 };
 
-const articlesByPageReducer = byKey(
+export const pageLoading = createAction(
+  'home/pageLoading',
+  (tag, page, payload) => {
+    return {
+      meta: {
+        tag,
+        page
+      },
+      payload
+    };
+  }
+);
+
+export const pageLoadingError = createAction(
+  'home/pageLoadingError',
+  (tag, page, payload) => {
+    return {
+      meta: {
+        tag,
+        page
+      },
+      payload
+    };
+  }
+);
+
+const articlesLoadableReducer = createLoadingReducer(
   articlesReducer,
+  pageLoading.type,
+  pageLoadingError.type
+);
+
+const articlesByPageReducer = byKey(
+  articlesLoadableReducer,
   //todo fix type
   (action: Action & { meta?: any }) => action.meta && action.meta.page,
   (action: PayloadAction<SetArticlesPayload>) => ({

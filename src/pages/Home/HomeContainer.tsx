@@ -25,7 +25,8 @@ const getVisibleArticles = createSelector(
   getSelectedArticlesFromRoot,
   (state: RootState) => state.articles.byId,
   (ids, map) => {
-    return (ids && ids.map(id => map[id])) || [];
+    //todo add .? operator support
+    return (ids && ids.value && ids.value.map(id => map[id])) || [];
   }
 );
 

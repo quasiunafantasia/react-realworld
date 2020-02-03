@@ -5,7 +5,9 @@ import {
   createSetArticlesByFeed,
   articlesByfeedReducer,
   defaultFeedState,
-  ArticlesByFeedState
+  ArticlesByFeedState,
+  pageLoading,
+  pageLoadingError
 } from './articles';
 
 export type HomeState = {
@@ -65,6 +67,8 @@ export const homeSlice = {
     ..._homeSlice.actions,
     setArticlesByFeed: createSetArticlesByFeed(
       _homeSlice.actions.setArticlesByFeed.type
-    )
+    ),
+    pageLoading,
+    pageLoadingError
   }
 };
