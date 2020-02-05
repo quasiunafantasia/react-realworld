@@ -7,7 +7,7 @@ import { AppThunk } from '../../../store';
 import { Maybe } from '../../../utils/types/Maybe';
 import { DEFAULT_FEED, homeSlice } from './home.slice';
 
-//todo split and rename to thunks
+//todo rename
 
 export const fetchArticles = (
   tag: Maybe<string>,

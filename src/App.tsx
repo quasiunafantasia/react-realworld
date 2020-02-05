@@ -6,6 +6,7 @@ import { LoginPageContainer } from './auth/LoginPageContainer';
 import { RegisterPageContainer } from './auth/RegisterPageContainer';
 import { UserSettingsContainer } from './auth/UserSettingsContainer';
 import { Header } from './layout/Header';
+import { ArticleContainer } from './pages/Article/ArticleContainer';
 import { HomeContainer } from './pages/Home/HomeContainer';
 import { RootState } from './store';
 
@@ -29,6 +30,7 @@ function App() {
           <Route exact path="/settings">
             <UserSettingsContainer />
           </Route>
+          <Route path="/article/:slug" children={<ArticleContainer />} />
         </Switch>
       </Router>
     </>

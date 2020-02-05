@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import { Article } from '../../../entities/articles/article.interface';
 
 export const ArticlePreview = ({ article }: { article: Article }) => {
@@ -21,11 +22,11 @@ export const ArticlePreview = ({ article }: { article: Article }) => {
         </button>
       </div>
       {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-      <a href="" className="preview-link">
+      <Link to={`article/${article.slug}`} className="preview-link">
         <h1>{article.title}</h1>
         <p>{article.description}</p>
         <span>Read more...</span>
-      </a>
+      </Link>
     </div>
   );
 };

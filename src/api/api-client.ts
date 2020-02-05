@@ -7,8 +7,10 @@ const delayBy = (delay: any, promise: any) => {
   return Promise.all([timer, promise]).then(([_, value]) => value);
 };
 
-const baseUrl = 'https://conduit.productionready.io/';
-const getFillUrl = (url: string) => (baseUrl + url).replace('//', '/');
+const baseUrl = 'conduit.productionready.io/';
+const getFillUrl = (url: string) => {
+  return 'https://' + (baseUrl + url).replace('//', '/');
+};
 
 export const apiClient = {
   get: (url: string, ...rest: any) => {
