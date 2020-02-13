@@ -1,32 +1,36 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { articleContext } from '../ArticleContext';
 
 //todo fix type
-export const ArticleHeader = ({ article }: any) => {
+export const ArticleHeader = () => {
+  const { article } = useContext(articleContext);
+
   return (
     <div className="banner">
       <div className="container">
-        <h1>{article.title}</h1>
+        <h1>{article?.title}</h1>
 
         <div className="article-meta">
           <a href="">
-            <img src={article.author.image} />
+            <img src={article?.author?.image} />
           </a>
           <div className="info">
             <a href="" className="author">
-              {article.author.username}
+              {article?.author?.username}
             </a>
-            <span className="date">{article.createdAt}</span>
+            <span className="date">{article?.createdAt}</span>
           </div>
           <button className="btn btn-sm btn-outline-secondary">
             <i className="ion-plus-round" />
-            &nbsp; Follow {article.author.username}
+            &nbsp; Follow {article?.author.username}
+            {/*todo followers count*/}
             <span className="counter">(10)</span>
           </button>
           &nbsp;&nbsp;
           <button className="btn btn-sm btn-outline-primary">
             <i className="ion-heart" />
             &nbsp; Favorite Post{' '}
-            <span className="counter">({article.favoritesCount})</span>
+            <span className="counter">({article?.favoritesCount})</span>
           </button>
         </div>
       </div>

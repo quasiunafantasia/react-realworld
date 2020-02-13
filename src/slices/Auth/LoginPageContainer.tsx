@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
-import { AppDispatch } from '../store';
+import { AppDispatch } from '../../store';
 import { login } from './auth.actions';
 import { User } from './auth.slice';
 import { AuthForm, AuthFormValue } from './AuthForm';

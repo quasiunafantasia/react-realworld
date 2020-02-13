@@ -1,4 +1,4 @@
-import { apiClient } from '../api/api-client';
+import { apiClient } from '../../core/api/api-client';
 import { User } from './auth.slice';
 
 export const login = (email: string, password: string) =>
@@ -18,7 +18,14 @@ export const register = (email: string, password: string, username: string) =>
     }
   });
 
-export const getCurrentUser = () => apiClient.get('/api/user');
+export const getCurrentUser = async (token: string) => {
+  const res = await apiClient.get('/api/user', {
+    headers: {
+      Authorization: `Token ${token}`
+    }
+  });
+  return res.data.user;
+};
 
 export const updateUser = (data: Partial<User>) =>
   apiClient.put('/api/user', {

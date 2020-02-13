@@ -3,7 +3,7 @@ import { Maybe } from '../../utils/types/Maybe';
 import { SetState } from '../../utils/types/SetState';
 import { Feed } from './feed.type';
 
-export type HomePageContext = Partial<{
+export type HomeContext = Partial<{
   selectTag: SetState<Maybe<string>>;
   feeds: Feed[];
   selectedTag: Maybe<string>;
@@ -15,4 +15,4 @@ export type HomePageContext = Partial<{
   total: number;
 }>;
 
-export const context = React.createContext<HomePageContext>({});
+export const context = React.createContext<HomeContext>({});

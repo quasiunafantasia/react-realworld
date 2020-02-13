@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { Article } from '../../../entities/articles/article.interface';
+import { Article } from '../../../core/entities/articles/article.interface';
 
 export const ArticlePreview = ({ article }: { article: Article }) => {
   return (

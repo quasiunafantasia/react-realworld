@@ -1,17 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
-import { LoginPageContainer } from './auth/LoginPageContainer';
-import { RegisterPageContainer } from './auth/RegisterPageContainer';
-import { UserSettingsContainer } from './auth/UserSettingsContainer';
+import { loadToken } from './core/tokenStorage';
+import { authSlice } from './slices/Auth/auth.slice';
+import { LoginPageContainer } from './slices/Auth/LoginPageContainer';
+import { RegisterPageContainer } from './slices/Auth/RegisterPageContainer';
+import { UserSettingsContainer } from './slices/Auth/UserSettingsContainer';
 import { Header } from './layout/Header';
-import { ArticleContainer } from './pages/Article/ArticleContainer';
-import { HomeContainer } from './pages/Home/HomeContainer';
-import { RootState } from './store';
+import { ArticleContainer } from './slices/Article/ArticleContainer';
+import { HomeContainer } from './slices/Home/HomeContainer';
+import { AppDispatch, RootState } from './store';
 
 function App() {
+  const dispatch: AppDispatch = useDispatch<AppDispatch>();
+
   const user = useSelector((state: RootState) => state.auth);
+  useEffect(() => {
+    const token = loadToken();
+    if (token) {
+      dispatch(authSlice.actions.loginByToken(token));
+    }
+  }, [dispatch]);
+
   return (
     <>
       <Router>

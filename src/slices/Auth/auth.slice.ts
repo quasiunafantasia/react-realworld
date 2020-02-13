@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { loginByToken, register } from './auth.actions';
 
 export type User = {
   email: string;
@@ -8,7 +9,7 @@ export type User = {
   image: string;
 };
 
-export const authSlice = createSlice({
+const _authSlice = createSlice({
   name: 'auth',
   initialState: null as User | null,
   reducers: {
@@ -17,3 +18,12 @@ export const authSlice = createSlice({
     }
   }
 });
+
+export const authSlice = {
+  ..._authSlice,
+  actions: {
+    ..._authSlice.actions,
+    loginByToken,
+    register
+  }
+};

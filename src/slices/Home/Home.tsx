@@ -1,12 +1,12 @@
 import { useContext } from 'react';
 import * as React from 'react';
-import { Article } from '../../entities/articles/article.interface';
+import { Article } from '../../core/entities/articles/article.interface';
 import { Header } from './components/Header';
 import { FeedSelector } from './components/FeedSelector';
 import { ArticlePreview } from './components/ArticlePreview';
 import { TagList } from './components/TagList';
 import { Pagination } from './components/Pagination';
-import { context } from './homePageContext';
+import { context } from './HomeContext';
 
 const calculatePages = (items: number, pageSize: number) =>
   Math.ceil(items / pageSize);

@@ -1,4 +1,4 @@
-import { Dictionary } from '../utils/types/Dictionary';
+import { Dictionary } from '../../utils/types/Dictionary';
 
 type Errors = Dictionary<string[]>;
 

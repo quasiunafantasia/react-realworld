@@ -26,10 +26,11 @@
     "redux-thunk": "^2.3.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test --env=jsdom",
     "eject": "react-scripts eject"
+
   },
   "husky": {
     "hooks": {
@@ -61,9 +62,12 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-optional-chaining": "^7.8.3",
+    "customize-cra": "^0.9.1",
     "husky": "^4.2.1",
     "lint-staged": "^10.0.3",
     "prettier": "^1.19.1",
+    "react-app-rewired": "^2.1.5",
     "typescript": "^3.7.5"
   }
 }

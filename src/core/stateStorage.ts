@@ -1,9 +1,14 @@
-import { RootState } from './store';
+import { RootState } from '../store';
 
 const STATE_KEY = '__STATE__';
 
+const formatState = (state: RootState): Partial<RootState> => {
+  const { auth, ...rest } = state;
+  return rest;
+};
+
 export const storeState = (state: RootState) => {
-  const serialized = JSON.stringify(state);
+  const serialized = JSON.stringify(formatState(state));
   localStorage.setItem(STATE_KEY, serialized);
 };
 

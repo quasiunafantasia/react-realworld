@@ -1,7 +1,7 @@
 import {
   createEntityReducer,
   Entity
-} from '../../utils/reducer-utils/createEnitySlice';
+} from '../../../utils/reducer-utils/createEnitySlice';
 import { Article } from './article.interface';
 
 type State = Entity<Article>;

@@ -13,7 +13,7 @@ import {
   getSelectedFeedMeta,
   homeSlice
 } from './redux/home.slice';
-import { context } from './homePageContext';
+import { context } from './HomeContext';
 import { useDispatch, useSelector } from 'react-redux';
 
 const selectTags = (state: RootState) => state.tags;
@@ -26,7 +26,7 @@ const getVisibleArticles = createSelector(
   (state: RootState) => state.articles.byId,
   (ids, map) => {
     //todo add .? operator support
-    return (ids && ids.value && ids.value.map(id => map[id])) || [];
+    return ids?.value?.map(id => map[id]) || [];
   }
 );
 
