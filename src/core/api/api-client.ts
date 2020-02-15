@@ -1,6 +1,21 @@
 import axios from 'axios';
+import { Maybe } from '../../utils/types/Maybe';
 
 const DELAY = 3000;
+
+let token: Maybe<string>;
+
+const getOptions = () => {
+  return token
+    ? {
+        headers: {
+          Authorization: `Token ${token}`
+        }
+      }
+    : {};
+};
+
+const setToken = (newToken: Maybe<string>) => (token = newToken);
 
 const delayBy = (delay: any, promise: any) => {
   const timer = new Promise(resolve => setTimeout(resolve, delay));
@@ -13,16 +28,19 @@ const getFillUrl = (url: string) => {
 };
 
 export const apiClient = {
-  get: (url: string, ...rest: any) => {
+  get: (url: string) => {
     // @ts-ignore
-    return delayBy(DELAY, axios.get(getFillUrl(url), ...rest));
+    return delayBy(DELAY, axios.get(getFillUrl(url), getOptions()));
   },
-  post: (url: string, ...rest: any) => {
+  post: (url: string, body: any) => {
     // @ts-ignore
-    return delayBy(DELAY, axios.post(getFillUrl(url), ...rest));
+    return delayBy(DELAY, axios.post(getFillUrl(url), body, getOptions()));
   },
-  put: (url: string, ...rest: any) => {
+  put: (url: string, body: any) => {
     // @ts-ignore
-    return delayBy(DELAY, axios.put(getFillUrl(url), ...rest));
-  }
+    return delayBy(DELAY, axios.put(getFillUrl(url), body, getOptions()));
+  },
+  delete: (url: string) =>
+    delayBy(DELAY, axios.delete(getFillUrl(url), getOptions())),
+  setToken
 };

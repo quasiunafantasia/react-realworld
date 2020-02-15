@@ -1,6 +1,6 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../../store';
-import { Maybe } from '../../../utils/types/Maybe';
+import { DEFAULT_FEED_NAME } from '../feed.type';
 import {
   createSetArticlesByFeed,
   articlesByfeedReducer,
@@ -11,23 +11,21 @@ import {
 } from './articles';
 
 export type HomeState = {
-  selectedFeed: Maybe<string>;
+  selectedFeedName: string;
   selectedPage: number;
   articlesByFeed: ArticlesByFeedState;
 };
 
-export const DEFAULT_FEED = 'DEFAULT_FEED';
-
 const _homeSlice = createSlice({
   name: 'home',
   initialState: {
-    selectedFeed: '',
+    selectedFeedName: DEFAULT_FEED_NAME,
     selectedPage: 1,
     articlesByFeed: {}
   } as HomeState,
   reducers: {
     selectFeed: (state, action) => {
-      state.selectedFeed = action.payload;
+      state.selectedFeedName = action.payload;
     },
     selectPage: (state, action) => {
       state.selectedPage = action.payload;
@@ -43,12 +41,9 @@ const _homeSlice = createSlice({
 
 export const getSelectedFeedMeta = createSelector(
   (state: RootState) => state && state.home.articlesByFeed,
-  (state: RootState) => state && state.home.selectedFeed,
+  (state: RootState) => state && state.home.selectedFeedName,
   (articlesByFeed, feed) => {
-    return (
-      (articlesByFeed && articlesByFeed[feed || DEFAULT_FEED]) ||
-      defaultFeedState
-    );
+    return (articlesByFeed && articlesByFeed[feed]) || defaultFeedState;
   }
 );
 
@@ -56,8 +51,7 @@ export const getSelectedArticles = createSelector(
   getSelectedFeedMeta,
   (state: RootState) => state.home.selectedPage,
   (feed, selectedPage) => {
-    // eslint-disable-next-line no-mixed-operators
-    return (feed && feed.articles[selectedPage]) || [];
+    return feed?.articles[selectedPage]?.value || [];
   }
 );
 

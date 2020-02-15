@@ -1,20 +1,20 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { loginByToken, register } from './auth.actions';
+import { loginByToken, register } from './auth.thunks';
 
-export type User = {
-  email: string;
-  token: string;
-  username: string;
-  bio: string;
-  image: string;
+type AuthState = {
+  currentAuthor?: string;
+  token?: string;
 };
 
 const _authSlice = createSlice({
   name: 'auth',
-  initialState: null as User | null,
+  initialState: {} as AuthState,
   reducers: {
-    setUser: (state, action: PayloadAction<User>) => {
-      return action.payload;
+    setCurrentAuthor: (state, action: PayloadAction<string>) => {
+      state.currentAuthor = action.payload;
+    },
+    setToken: (state, action: PayloadAction<string>) => {
+      state.token = action.payload;
     }
   }
 });

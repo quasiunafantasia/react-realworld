@@ -25,6 +25,7 @@ export const ArticleComments = ({
             <img
               src="http://i.imgur.com/Qr71crq.jpg"
               className="comment-author-img"
+              alt=""
             />
             <button className="btn btn-sm btn-primary">Post Comment</button>
           </div>

@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import * as React from 'react';
-import { Article } from '../../core/entities/articles/article.interface';
+import { Article } from '../entities/article.interface';
 import { Header } from './components/Header';
 import { FeedSelector } from './components/FeedSelector';
 import { ArticlePreview } from './components/ArticlePreview';

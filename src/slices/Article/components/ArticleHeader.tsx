@@ -11,10 +11,12 @@ export const ArticleHeader = () => {
         <h1>{article?.title}</h1>
 
         <div className="article-meta">
+          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
           <a href="">
-            <img src={article?.author?.image} />
+            <img src={article?.author?.image} alt="" />
           </a>
           <div className="info">
+            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
             <a href="" className="author">
               {article?.author?.username}
             </a>

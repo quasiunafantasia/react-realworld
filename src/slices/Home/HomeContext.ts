@@ -8,11 +8,12 @@ export type HomeContext = Partial<{
   feeds: Feed[];
   selectedTag: Maybe<string>;
   tags: string[];
-  selectFeed: (feed: Maybe<string>) => any;
+  selectFeed: (feed: string) => any;
   selectedFeed: Maybe<string>;
   selectedPage: number;
   selectPage: SetState<number>;
   total: number;
+  favoriteArticle: (slug: string, isFavorite: boolean) => any;
 }>;
 
 export const context = React.createContext<HomeContext>({});

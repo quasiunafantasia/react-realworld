@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import './App.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import { apiClient } from './core/api/api-client';
 import { loadToken } from './core/tokenStorage';
 import { authSlice } from './slices/Auth/auth.slice';
 import { LoginPageContainer } from './slices/Auth/LoginPageContainer';
@@ -17,10 +18,8 @@ function App() {
 
   const user = useSelector((state: RootState) => state.auth);
   useEffect(() => {
-    const token = loadToken();
-    if (token) {
-      dispatch(authSlice.actions.loginByToken(token));
-    }
+    apiClient.setToken(loadToken());
+    dispatch(authSlice.actions.loginByToken());
   }, [dispatch]);
 
   return (

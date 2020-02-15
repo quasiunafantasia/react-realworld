@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Article } from '../../core/entities/articles/article.interface';
-import { Comment } from '../../core/entities/comments/comment.interface';
+import { Article } from '../entities/article.interface';
+import { Comment } from '../entities/comment.interface';
 
 export type ArticleContext = Partial<{
   article: Article;

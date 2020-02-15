@@ -100,7 +100,7 @@ const feedReducer = (
 export const articlesByfeedReducer = byKey(
   feedReducer,
   //todo fix type
-  (action: Action & { meta?: any }) => action.meta && action.meta.tag
+  (action: Action & { meta?: any }) => action?.meta?.tag
 );
 
 export const createSetArticlesByFeed = (type: string) =>

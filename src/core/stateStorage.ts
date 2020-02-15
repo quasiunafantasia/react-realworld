@@ -3,7 +3,7 @@ import { RootState } from '../store';
 const STATE_KEY = '__STATE__';
 
 const formatState = (state: RootState): Partial<RootState> => {
-  const { auth, ...rest } = state;
+  const { auth, optimistic, ...rest } = state;
   return rest;
 };
 

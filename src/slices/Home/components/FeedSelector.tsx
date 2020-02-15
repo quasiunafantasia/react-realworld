@@ -11,7 +11,7 @@ export const FeedSelector = ({
 }: {
   feeds: Feed[];
   selectedFeed: Maybe<string>;
-  selectFeed: (feed: Maybe<string>) => any;
+  selectFeed: (feedName: string) => any;
 }) => {
   const createSelectFeed = (feed: Feed) => (e: MouseEvent) => {
     e.preventDefault();
