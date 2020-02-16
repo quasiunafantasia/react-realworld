@@ -1,19 +1,17 @@
 import { schema } from 'normalizr';
-import { Article } from './article.interface';
-import { Author } from './author.interface';
-import { Comment } from './comment.interface';
+import { NormalizedEntities } from './entities.reducer';
 
-export const authorSchema = new schema.Entity<Author>(
+export const authorSchema = new schema.Entity(
   'authors',
   {},
   { idAttribute: 'username' }
 );
 
-export const commentSchema = new schema.Entity<Comment>('comments', {
+export const commentSchema = new schema.Entity('comments', {
   commenter: authorSchema
 });
 
-export const articleSchema = new schema.Entity<Article>(
+export const articleSchema = new schema.Entity(
   'articles',
   {
     author: authorSchema,
@@ -23,3 +21,11 @@ export const articleSchema = new schema.Entity<Article>(
     idAttribute: 'slug'
   }
 );
+
+export const shemaMapping: {
+  [key in NormalizedEntities]: typeof articleSchema;
+} = {
+  articles: articleSchema,
+  authors: authorSchema,
+  comments: commentSchema
+};

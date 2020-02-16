@@ -1,5 +1,6 @@
 import { Action, createReducer, PayloadAction } from '@reduxjs/toolkit';
 import { Dictionary } from '../../utils/types/Dictionary';
+import { Entities } from '../entities/entities.reducer';
 import {
   createOptimisticResponse,
   deleteOptimisticResponse
@@ -8,13 +9,15 @@ import {
 export type OptimisticResponse = {
   id: string;
   data: any;
-  entity: any;
+  entity: Entities;
   entityId: string;
 };
 
 export type OptimisticState = {
   responses: Dictionary<OptimisticResponse>;
-  optimisticEntities: Dictionary<Dictionary<string[]>>;
+  optimisticEntities: {
+    [key in Entities]?: Dictionary<string[]>;
+  };
 };
 
 const initialOptimisticState: OptimisticState = {
@@ -37,9 +40,11 @@ export const optimisticReducer = createReducer(
             state.optimisticEntities[action.payload.entity] || {};
           const optimisticEntity =
             state.optimisticEntities[action.payload.entity];
-          optimisticEntity[action.payload.entityId] =
-            optimisticEntity[action.payload.entityId] || [];
-          optimisticEntity[action.payload.entityId].push(action.payload.id);
+          if (optimisticEntity) {
+            optimisticEntity[action.payload.entityId] =
+              optimisticEntity[action.payload.entityId] || [];
+            optimisticEntity[action.payload.entityId].push(action.payload.id);
+          }
         }
       )
       .addCase(
@@ -51,11 +56,11 @@ export const optimisticReducer = createReducer(
           const { id } = action.payload;
           const response = state.responses[id];
           const entityTable = state.optimisticEntities[response.entity];
-
-          entityTable[response.entityId] = entityTable[
-            response.entityId
-          ].filter(res => res !== id);
-
+          if (entityTable) {
+            entityTable[response.entityId] = entityTable[
+              response.entityId
+            ].filter(res => res !== id);
+          }
           delete state.responses[id];
         }
       )
@@ -63,7 +68,7 @@ export const optimisticReducer = createReducer(
 
 export const selectOptimistic = (
   optimisticState: OptimisticState,
-  entity: string,
+  entity: Entities,
   id: string
 ) => {
   const optimisticEntity = optimisticState.optimisticEntities[entity] || {};

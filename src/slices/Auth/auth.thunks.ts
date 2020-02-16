@@ -1,8 +1,9 @@
 import { normalize } from 'normalizr';
 import { AppDispatch, AppThunk } from '../../store';
 import { addEntities } from '../entities/addEntities.action';
-import { Author } from '../entities/author.interface';
+import { EntitiesNormalizedState } from '../entities/entities.reducer';
 import { authorSchema } from '../entities/schema';
+import { Author } from '../entities/types/author';
 import { getCurrentUser } from './auth.service';
 import * as authService from './auth.service';
 import { authSlice } from './auth.slice';
@@ -13,7 +14,10 @@ type UserResponse = Author & {
 
 const onUserResponse = (res: UserResponse, dispatch: AppDispatch) => {
   const { token, ...user } = res;
-  const normalized = normalize(user, authorSchema);
+  const normalized = normalize<any, EntitiesNormalizedState>(
+    user,
+    authorSchema
+  );
   dispatch(
     addEntities({
       entities: normalized.entities

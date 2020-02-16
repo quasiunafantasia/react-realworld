@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { Article } from '../../entities/article.interface';
+import { Article } from '../../entities/types/article';
 import classNames from 'classnames';
 import { context } from '../HomeContext';
 

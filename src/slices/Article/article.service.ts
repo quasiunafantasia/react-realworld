@@ -1,6 +1,6 @@
 import { apiClient } from '../../core/api/api-client';
-import { Article } from '../entities/article.interface';
-import { Comment } from '../entities/comment.interface';
+import { Article } from '../entities/types/article';
+import { Comment } from '../entities/types/comment';
 
 export const getArticleBySlug = (slug: string): Promise<Article> =>
   apiClient.get(`/api/articles/${slug}`).then(res => res.data.article);

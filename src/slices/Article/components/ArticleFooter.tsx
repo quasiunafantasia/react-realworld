@@ -7,17 +7,18 @@ export const ArticleFooter = () => {
   return (
     <div className="article-meta">
       <a href="profile.html">
-        <img src={article?.author.image} />
+        <img src={article?.author.image} alt="" />
       </a>
       <div className="info">
         {/*  todo link*/}
+        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
         <a href="" className="author">
           {article?.author.username}
         </a>
         <span className="date">{article?.createdAt}</span>
       </div>
       <button className="btn btn-sm btn-outline-secondary">
-        <i className="ion-plus-round"></i>
+        <i className="ion-plus-round" />
         {/*  todo followers count*/}
         &nbsp; Follow {article?.author.username}{' '}
         <span className="counter">(10)</span>

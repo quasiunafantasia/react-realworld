@@ -1,6 +1,6 @@
 import { apiClient } from '../../core/api/api-client';
-import { Article } from '../entities/article.interface';
-import { Tag } from '../entities/tag.type';
+import { Article } from '../entities/types/article';
+import { Tag } from '../entities/types/tag';
 import { DEFAULT_FEED_NAME, PERSONAL_FEED_NAME } from './feed.type';
 
 const ARTICLES_PER_PAGE = 20;

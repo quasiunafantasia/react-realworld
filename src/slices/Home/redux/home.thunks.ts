@@ -1,5 +1,7 @@
 import { normalize } from 'normalizr';
-import { Article } from '../../entities/article.interface';
+import { selectOptimisticArticle } from '../../common.selectors';
+import { EntitiesNormalizedState } from '../../entities/entities.reducer';
+import { Article } from '../../entities/types/article';
 import { articleSchema } from '../../entities/schema';
 import { addEntities } from '../../entities/addEntities.action';
 import { AppDispatch, AppThunk } from '../../../store';
@@ -7,7 +9,6 @@ import {
   createOptimisticResponse,
   deleteOptimisticResponse
 } from '../../optimistic/optimistic.actions';
-import { selectOptimisticArticle } from './home.selectors';
 import {
   loadArticles,
   loadTags,
@@ -25,7 +26,9 @@ export const fetchArticles = (
   const { articles, articlesCount } = await loadArticles(feedType, page);
   dispatch(homeSlice.actions.pageLoading(feedType, page, false));
 
-  const nomalized = normalize(articles, [articleSchema]);
+  const nomalized = normalize<any, EntitiesNormalizedState>(articles, [
+    articleSchema
+  ]);
 
   dispatch(
     addEntities({

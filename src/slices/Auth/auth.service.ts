@@ -1,5 +1,5 @@
 import { apiClient } from '../../core/api/api-client';
-import { Author } from '../entities/author.interface';
+import { Author } from '../entities/types/author';
 
 export const login = (email: string, password: string) =>
   apiClient
