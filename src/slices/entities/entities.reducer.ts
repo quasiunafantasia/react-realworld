@@ -11,13 +11,15 @@ export type NormalizedEntity = Dictionary<any>;
 
 export type NormalizedEntities = 'articles' | 'authors' | 'comments';
 
-export type EntitiesNormalizedState = {
+export type EntitiesState = {
   [key in NormalizedEntities]: NormalizedEntity;
 } & {
   tags: Tag[];
 };
 
-export type Entities = keyof EntitiesNormalizedState;
+export type NormalizedEntitiesState = Pick<EntitiesState, NormalizedEntities>;
+
+export type Entities = keyof EntitiesState;
 
 export type EntitiesDenormalizedStateMapping = {
   articles: ArticleWithComments;

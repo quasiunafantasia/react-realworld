@@ -1,8 +1,8 @@
 import { createAction } from '@reduxjs/toolkit';
-import { EntitiesNormalizedState } from './entities.reducer';
+import { EntitiesState } from './entities.reducer';
 
 export type AddEntitiesPayload = {
-  entities: Partial<EntitiesNormalizedState>;
+  entities: Partial<EntitiesState>;
 };
 
 export const addEntities = createAction<AddEntitiesPayload>('addEntities');

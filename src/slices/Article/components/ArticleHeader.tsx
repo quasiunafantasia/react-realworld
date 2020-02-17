@@ -25,11 +25,9 @@ export const ArticleHeader = () => {
           <button className="btn btn-sm btn-outline-secondary">
             <i className="ion-plus-round" />
             &nbsp; Follow {article?.author.username}
-            {/*todo followers count*/}
-            <span className="counter">(10)</span>
           </button>
           &nbsp;&nbsp;
-          <button className="btn btn-sm btn-outline-primary">
+          <button className="btn btn-skm btn-outline-primary">
             <i className="ion-heart" />
             &nbsp; Favorite Post{' '}
             <span className="counter">({article?.favoritesCount})</span>

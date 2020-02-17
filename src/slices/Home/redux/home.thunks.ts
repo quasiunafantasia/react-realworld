@@ -1,13 +1,11 @@
 import { normalize } from 'normalizr';
-import { selectOptimisticArticle } from '../../common.selectors';
-import { EntitiesNormalizedState } from '../../entities/entities.reducer';
-import { Article } from '../../entities/types/article';
+import { EntitiesState } from '../../entities/entities.reducer';
 import { articleSchema } from '../../entities/schema';
 import { addEntities } from '../../entities/addEntities.action';
 import { AppDispatch, AppThunk } from '../../../store';
 import {
-  createOptimisticResponse,
-  deleteOptimisticResponse
+  deleteOptimisticResponse,
+  createOptimisticDiff
 } from '../../optimistic/optimistic.actions';
 import {
   loadArticles,
@@ -26,9 +24,7 @@ export const fetchArticles = (
   const { articles, articlesCount } = await loadArticles(feedType, page);
   dispatch(homeSlice.actions.pageLoading(feedType, page, false));
 
-  const nomalized = normalize<any, EntitiesNormalizedState>(articles, [
-    articleSchema
-  ]);
+  const nomalized = normalize<any, EntitiesState>(articles, [articleSchema]);
 
   dispatch(
     addEntities({
@@ -58,30 +54,24 @@ export const fetchTags = (): AppThunk => async dispatch => {
 export const favoriteArticle = (
   slug: string,
   isFavorite: boolean
-): AppThunk => async (dispatch, getState) => {
-  const state = getState();
-  const article: Article = selectOptimisticArticle(
-    slug,
-    state.entities,
-    state.optimistic
+): AppThunk => async dispatch => {
+  const optimisticDiffId = await dispatch(
+    createOptimisticDiff('articles', slug, article => {
+      return {
+        ...article,
+        favorited: isFavorite,
+        favoritesCount: isFavorite
+          ? article.favoritesCount + 1
+          : article.favoritesCount - 1
+      };
+    })
   );
-  const optimisticBody: Partial<Article> = {
-    favorited: isFavorite,
-    favoritesCount: article.favoritesCount + (isFavorite ? 1 : -1)
-  };
-  const optimisitcAction = createOptimisticResponse({
-    entity: 'articles',
-    entityId: slug,
-    data: optimisticBody
-  });
-
-  dispatch(optimisitcAction);
 
   const articleResponse = await _favoriteArticle(slug, isFavorite);
 
   const { entities } = normalize(articleResponse, articleSchema);
 
-  dispatch(deleteOptimisticResponse(optimisitcAction.payload.id));
+  dispatch(deleteOptimisticResponse(optimisticDiffId));
   dispatch(
     addEntities({
       entities

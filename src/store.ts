@@ -7,7 +7,7 @@ import { entitesReducer } from './slices/entities/entities.reducer';
 import { homeSlice } from './slices/Home/redux/home.slice';
 import { loadState, storeState } from './core/stateStorage';
 import throttle from 'lodash/throttle';
-import { optimisticReducer } from './slices/optimistic/optimistic.slice';
+import { optimisticReducer } from './slices/optimistic/optimistic.reducer';
 
 export type RootState = ReturnType<typeof rootReducer>;
 //todo fix type

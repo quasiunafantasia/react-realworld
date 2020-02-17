@@ -19,9 +19,7 @@ export const ArticleFooter = () => {
       </div>
       <button className="btn btn-sm btn-outline-secondary">
         <i className="ion-plus-round" />
-        {/*  todo followers count*/}
         &nbsp; Follow {article?.author.username}{' '}
-        <span className="counter">(10)</span>
       </button>
       &nbsp;
       <button className="btn btn-sm btn-outline-primary">

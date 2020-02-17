@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../../../store';
-import { selectOptimisticArticle } from '../../common.selectors';
+import { selectDenormalizedEntityOptimistic } from '../../entities/entities.selectors';
 
 import { getSelectedArticles } from './home.slice';
 
@@ -13,7 +13,12 @@ export const selectVisibleArticles = createSelector(
   (state: RootState) => state.optimistic,
   (ids, entities, optimistic) => {
     return ids.map(id => {
-      return selectOptimisticArticle(id, entities, optimistic);
+      return selectDenormalizedEntityOptimistic(
+        'articles',
+        id,
+        entities,
+        optimistic
+      );
     });
   }
 );
