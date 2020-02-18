@@ -1,10 +1,10 @@
 import React, { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
-import { AppDispatch } from '../../store';
-import { login } from './auth.thunks';
-import { AuthForm, AuthFormValue } from './AuthForm';
-import { formatErrors } from './errorsFormatter';
+import { AppDispatch } from '../../../store';
+import { login } from '../auth.thunks';
+import { AuthForm, AuthFormValue } from '../AuthForm';
+import { formatErrors } from '../errorsFormatter';
 
 export const LoginPageContainer = withRouter(
   ({ history }: RouteComponentProps) => {

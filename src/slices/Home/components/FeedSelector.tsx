@@ -2,7 +2,7 @@ import 'react';
 import { MouseEvent } from 'react';
 import * as React from 'react';
 import { Maybe } from '../../../utils/types/Maybe';
-import { Feed } from '../feed.type';
+import { Feed } from '../Feed.type';
 
 export const FeedSelector = ({
   feeds,

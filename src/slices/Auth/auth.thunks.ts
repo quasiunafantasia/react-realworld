@@ -4,9 +4,9 @@ import { addEntities } from '../entities/addEntities.action';
 import { EntitiesState } from '../entities/entities.reducer';
 import { authorSchema } from '../entities/schema';
 import { Author } from '../entities/types/author';
-import { getCurrentUser } from './auth.service';
-import * as authService from './auth.service';
-import { authSlice } from './auth.slice';
+import { getCurrentUser } from './authService';
+import * as authService from './authService';
+import { authSlice } from './authSlice';
 
 type UserResponse = Author & {
   token: string;

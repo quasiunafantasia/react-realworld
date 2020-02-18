@@ -1,9 +1,9 @@
 import { Action, createAction, PayloadAction } from '@reduxjs/toolkit';
-import { byKey } from '../../../utils/reducer-utils/byKey';
+import { byKey } from '../../../utils/reducerUtils/byKey';
 import {
   createLoadingReducer,
   Loading
-} from '../../../utils/reducer-utils/loading';
+} from '../../../utils/reducerUtils/loading';
 import { Dictionary } from '../../../utils/types/Dictionary';
 
 type ArticlesState = string[];

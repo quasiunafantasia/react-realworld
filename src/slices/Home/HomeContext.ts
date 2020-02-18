@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Maybe } from '../../utils/types/Maybe';
 import { SetState } from '../../utils/types/SetState';
-import { Feed } from './feed.type';
+import { Feed } from './Feed.type';
 
 export type HomeContext = Partial<{
   selectTag: SetState<Maybe<string>>;

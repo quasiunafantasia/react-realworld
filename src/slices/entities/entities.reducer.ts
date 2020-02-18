@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { createEntityReducer } from '../../utils/reducer-utils/createEnitySlice';
+import { createEntityReducer } from '../../utils/reducerUtils/createEnitySlice';
 import { Dictionary } from '../../utils/types/Dictionary';
 import { ArticleWithComments } from './types/articleWithComments';
 import { Author } from './types/author';

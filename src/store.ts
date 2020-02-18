@@ -1,8 +1,8 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import { Action, combineReducers } from 'redux';
 import { ThunkAction, ThunkMiddleware } from 'redux-thunk';
-import { authSlice } from './slices/Auth/auth.slice';
-import { storeTokenMiddleware } from './slices/Auth/storeToken.middleware';
+import { authSlice } from './slices/Auth/authSlice';
+import { storeTokenMiddleware } from './slices/Auth/storeTokenMiddleware';
 import { entitesReducer } from './slices/entities/entities.reducer';
 import { homeSlice } from './slices/Home/redux/home.slice';
 import { loadState, storeState } from './core/stateStorage';

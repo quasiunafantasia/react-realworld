@@ -1,6 +1,6 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../../store';
-import { DEFAULT_FEED_NAME } from '../feed.type';
+import { DEFAULT_FEED_NAME } from '../Feed.type';
 import {
   createSetArticlesByFeed,
   articlesByfeedReducer,

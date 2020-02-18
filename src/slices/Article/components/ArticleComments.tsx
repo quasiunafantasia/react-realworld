@@ -1,18 +1,16 @@
-import React from 'react';
+import React, { FC } from 'react';
+import { useCurrentUser } from '../../Auth/currnetUser.provider';
+import { Comment } from '../../entities/types/comment';
 import { ArticleComment } from './ArticleComment';
 
-type ArticleCommentsProps = {
-  showSubmit: boolean;
-  comments: any[];
-};
-
-export const ArticleComments = ({
-  showSubmit,
+export const ArticleComments: FC<{comments: Comment[]}> = ({
   comments
-}: ArticleCommentsProps) => {
+}) => {
+  const user = useCurrentUser();
+
   return (
     <>
-      {showSubmit ? (
+      {user ? (
         <form className="card comment-form">
           <div className="card-block">
             <textarea
@@ -23,7 +21,7 @@ export const ArticleComments = ({
           </div>
           <div className="card-footer">
             <img
-              src="http://i.imgur.com/Qr71crq.jpg"
+              src={user.image}
               className="comment-author-img"
               alt=""
             />

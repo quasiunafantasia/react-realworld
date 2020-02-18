@@ -1,22 +1,19 @@
 import { compose } from '@reduxjs/toolkit';
-import * as React from 'react';
-import { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { Maybe } from '../../utils/types/Maybe';
-import { useSelectIsLooggedIn } from '../Auth/auth.selectors';
-import { DEFAULT_FEED_NAME, Feed, PERSONAL_FEED_NAME } from './feed.type';
+import { useIsLoggedIn } from '../Auth/currnetUser.provider';
+import { DEFAULT_FEED_NAME, Feed, PERSONAL_FEED_NAME } from './Feed.type';
 import { Home } from './Home';
-import { useEffect } from 'react';
-import { useMemo } from 'react';
+import { context } from './HomeContext';
 import { selectVisibleArticles } from './redux/home.selectors';
+import { getSelectedFeedMeta, homeSlice } from './redux/home.slice';
 import {
   favoriteArticle as favoriteArticleAction,
   fetchArticles,
   fetchTags
 } from './redux/home.thunks';
-import { getSelectedFeedMeta, homeSlice } from './redux/home.slice';
-import { context } from './HomeContext';
-import { useDispatch, useSelector } from 'react-redux';
 
 const selectTags = (state: RootState) => state.entities.tags;
 
@@ -34,7 +31,7 @@ export const HomeContainer = () => {
   const dispatch = useDispatch();
   const tags = useSelector(selectTags);
   const articles = useSelector(selectVisibleArticles);
-  const isLoggedIn = useSelectIsLooggedIn();
+  const isLoggedIn = useIsLoggedIn();
 
   const selectedFeed = useSelector(
     (state: RootState) => state.home.selectedFeedName

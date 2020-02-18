@@ -1,6 +1,9 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
-export const Header = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
+import { useIsLoggedIn } from '../slices/Auth/currnetUser.provider';
+export const Header = () => {
+  const isLoggedIn = useIsLoggedIn();
+
   return (
     <nav className="navbar navbar-light">
       <div className="container">

@@ -34,7 +34,6 @@ export const ArticlePage = ({ article, comments }) => {
             <div className="col-xs-12 col-md-8 offset-md-2">
               <ArticleComments
                 comments={comments || ([] as any)}
-                showSubmit={true}
               />
             </div>
           </div>

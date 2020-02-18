@@ -11,7 +11,7 @@ import {
   loadArticles,
   loadTags,
   favoriteArticle as _favoriteArticle
-} from '../home.service';
+} from '../homeService';
 import { homeSlice } from './home.slice';
 
 export const fetchArticles = (

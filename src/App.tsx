@@ -1,51 +1,40 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
-import { useDispatch } from 'react-redux';
-import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
-import { apiClient } from './core/api/api-client';
-import { loadToken } from './core/tokenStorage';
-import { useSelectIsLooggedIn } from './slices/Auth/auth.selectors';
-import { authSlice } from './slices/Auth/auth.slice';
-import { LoginPageContainer } from './slices/Auth/LoginPageContainer';
-import { RegisterPageContainer } from './slices/Auth/RegisterPageContainer';
-import { UserSettingsContainer } from './slices/Auth/UserSettingsContainer';
+import { AppStartup } from './AppStartup';
 import { Header } from './layout/Header';
 import { ArticleContainer } from './slices/Article/ArticleContainer';
+import { CurrentUserProvider } from './slices/Auth/currnetUser.provider';
+import { LoginPageContainer } from './slices/Auth/pages/LoginPageContainer';
+import { RegisterPageContainer } from './slices/Auth/pages/RegisterPageContainer';
+import { UserSettingsContainer } from './slices/Auth/pages/UserSettingsContainer';
 import { HomeContainer } from './slices/Home/HomeContainer';
-import { AppDispatch } from './store';
 
 function App() {
-  const dispatch: AppDispatch = useDispatch<AppDispatch>();
-
-  const isLoggedIn = useSelectIsLooggedIn();
-
-  useEffect(() => {
-    apiClient.setToken(loadToken());
-    dispatch(authSlice.actions.loginByToken());
-  }, [dispatch]);
-
   return (
-    <>
-      <Router>
-        <Header isLoggedIn={isLoggedIn} />
+    <AppStartup>
+      <CurrentUserProvider>
+        <Router>
+          <Header />
 
-        <Switch>
-          <Route exact path="/">
-            <HomeContainer />
-          </Route>
-          <Route exact path="/login">
-            <LoginPageContainer />
-          </Route>
-          <Route exact path="/register">
-            <RegisterPageContainer />
-          </Route>
-          <Route exact path="/settings">
-            <UserSettingsContainer />
-          </Route>
-          <Route path="/article/:slug" children={<ArticleContainer />} />
-        </Switch>
-      </Router>
-    </>
+          <Switch>
+            <Route exact path="/">
+              <HomeContainer />
+            </Route>
+            <Route exact path="/login">
+              <LoginPageContainer />
+            </Route>
+            <Route exact path="/register">
+              <RegisterPageContainer />
+            </Route>
+            <Route exact path="/settings">
+              <UserSettingsContainer />
+            </Route>
+            <Route path="/article/:slug" children={<ArticleContainer />} />
+          </Switch>
+        </Router>
+      </CurrentUserProvider>
+    </AppStartup>
   );
 }
 
