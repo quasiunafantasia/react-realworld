@@ -3,7 +3,7 @@ import * as React from 'react';
 import { useCallback, useState } from 'react';
 import { RootState } from '../../store';
 import { Maybe } from '../../utils/types/Maybe';
-import { selectIsLoggedIn } from '../Auth/auth.selectors';
+import { useSelectIsLooggedIn } from '../Auth/auth.selectors';
 import { DEFAULT_FEED_NAME, Feed, PERSONAL_FEED_NAME } from './feed.type';
 import { Home } from './Home';
 import { useEffect } from 'react';
@@ -34,7 +34,7 @@ export const HomeContainer = () => {
   const dispatch = useDispatch();
   const tags = useSelector(selectTags);
   const articles = useSelector(selectVisibleArticles);
-  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const isLoggedIn = useSelectIsLooggedIn();
 
   const selectedFeed = useSelector(
     (state: RootState) => state.home.selectedFeedName

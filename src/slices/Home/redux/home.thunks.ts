@@ -67,14 +67,18 @@ export const favoriteArticle = (
     })
   );
 
-  const articleResponse = await _favoriteArticle(slug, isFavorite);
+  try {
+    const articleResponse = await _favoriteArticle(slug, isFavorite);
 
-  const { entities } = normalize(articleResponse, articleSchema);
-
-  dispatch(deleteOptimisticResponse(optimisticDiffId));
-  dispatch(
-    addEntities({
-      entities
-    })
-  );
+    const { entities } = normalize(articleResponse, articleSchema);
+    dispatch(
+      addEntities({
+        entities
+      })
+    );
+  } catch (e) {
+    //  todo handle error ?
+  } finally {
+    dispatch(deleteOptimisticResponse(optimisticDiffId));
+  }
 };

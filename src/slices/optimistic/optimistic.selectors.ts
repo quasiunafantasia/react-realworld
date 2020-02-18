@@ -1,5 +1,4 @@
 import {
-  Entities,
   EntitiesState,
   NormalizedEntitiesState
 } from '../entities/entities.reducer';
