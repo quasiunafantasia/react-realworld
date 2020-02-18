@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { FC, useContext } from 'react';
 import * as React from 'react';
 import { Article } from '../entities/types/article';
 import { Header } from './components/Header';
@@ -11,7 +11,7 @@ import { context } from './HomeContext';
 const calculatePages = (items: number, pageSize: number) =>
   Math.ceil(items / pageSize);
 
-export const Home = ({ articles }: { articles: Article[] }) => {
+export const Home: FC<{ articles: Article[] }> = ({ articles }) => {
   const {
     tags,
     selectTag,

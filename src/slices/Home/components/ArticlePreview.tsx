@@ -1,11 +1,11 @@
-import { useContext } from 'react';
+import { FC, useContext } from 'react';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { Article } from '../../entities/types/article';
 import classNames from 'classnames';
 import { context } from '../HomeContext';
 
-export const ArticlePreview = ({ article }: { article: Article }) => {
+export const ArticlePreview: FC<{ article: Article }> = ({ article }) => {
   const { favoriteArticle } = useContext(context);
   return (
     <div className="article-preview">

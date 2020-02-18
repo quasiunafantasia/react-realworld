@@ -1,14 +1,11 @@
 import 'react';
-import { MouseEvent } from 'react';
+import { FC, MouseEvent } from 'react';
 import * as React from 'react';
 
-export const TagList = ({
-  tags,
-  selectTag
-}: {
+export const TagList: FC<{
   tags: string[];
   selectTag: (tag: string) => any;
-}) => {
+}> = ({ tags, selectTag }) => {
   const createOnTagClick = (tag: string) => (e: MouseEvent) => {
     e.preventDefault();
     selectTag(tag);

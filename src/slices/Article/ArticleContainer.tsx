@@ -15,7 +15,6 @@ export const ArticleContainer = () => {
   useEffect(() => {
     dispatch(getArticleData(slug));
   }, [slug, dispatch]);
-  console.log(article);
   return article.slug ? (
     <ArticlePage article={article} comments={article.comments} />
   ) : null;

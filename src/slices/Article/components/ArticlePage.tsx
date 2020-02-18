@@ -1,6 +1,6 @@
 import React from 'react';
 import { articleContext } from '../ArticleContext';
-import { ArticleComments } from './ArticleComments';
+import { ArticleComments } from './comments/ArticleComments';
 import { ArticleFooter } from './ArticleFooter';
 import { ArticleHeader } from './ArticleHeader';
 
@@ -32,9 +32,7 @@ export const ArticlePage = ({ article, comments }) => {
 
           <div className="row">
             <div className="col-xs-12 col-md-8 offset-md-2">
-              <ArticleComments
-                comments={comments || ([] as any)}
-              />
+              <ArticleComments comments={comments || ([] as any)} />
             </div>
           </div>
         </div>

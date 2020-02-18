@@ -1,17 +1,20 @@
 import React, { FC, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { apiClient } from './core/api/api-client';
-import { loadToken } from './core/tokenStorage';
+import { loadToken, storeToken } from './core/tokenStorage';
 import { authSlice } from './slices/Auth/authSlice';
 import { AppDispatch } from './store';
 
-export const AppStartup: FC = ({children}) => {
-    const dispatch: AppDispatch = useDispatch<AppDispatch>();
+export const AppStartup: FC = ({ children }) => {
+  const dispatch: AppDispatch = useDispatch<AppDispatch>();
 
-    useEffect(() => {
-        apiClient.setToken(loadToken());
-        dispatch(authSlice.actions.loginByToken());
-    }, [dispatch]);
+  useEffect(() => {
+    const token = loadToken();
+    if (token) {
+      apiClient.setToken(token);
+      dispatch(authSlice.actions.loginByToken()).catch(() => storeToken(null));
+    }
+  }, [dispatch]);
 
-    return <>{children}</>
-}
+  return <>{children}</>;
+};

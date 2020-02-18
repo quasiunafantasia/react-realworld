@@ -40,12 +40,11 @@ export const HomeContainer = () => {
     (state: RootState) => state.home.selectedPage
   );
 
-  //todo fix type :(
   const total = useSelector(
     compose((meta: { total: number }) => {
       return meta.total;
     }, getSelectedFeedMeta)
-  ) as number;
+  );
 
   const selectFeed = useCallback(
     (feedName: string) => {

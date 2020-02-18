@@ -1,14 +1,10 @@
-import React, { useMemo, MouseEvent } from 'react';
+import React, { useMemo, MouseEvent, FC } from 'react';
 
-export const Pagination = ({
-  activePage,
-  selectPage,
-  totalPages
-}: {
+export const Pagination: FC<{
   activePage: number;
   selectPage: Function;
   totalPages: number;
-}) => {
+}> = ({ activePage, selectPage, totalPages }) => {
   const pages = useMemo(
     () =>
       Array(totalPages)

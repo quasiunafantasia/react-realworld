@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { articleContext } from '../ArticleContext';
 
-//todo fix type
 export const ArticleHeader = () => {
   const { article } = useContext(articleContext);
 
