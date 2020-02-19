@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { useIsLoggedIn } from '../slices/Auth/currnetUser.provider';
+import { useIsLoggedIn } from '../slices/Auth/currnetUserProvider';
 export const Header = () => {
   const isLoggedIn = useIsLoggedIn();
 

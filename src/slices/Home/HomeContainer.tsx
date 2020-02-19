@@ -1,9 +1,10 @@
 import { compose } from '@reduxjs/toolkit';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { withRouter } from 'react-router';
 import { RootState } from '../../store';
 import { Maybe } from '../../utils/types/Maybe';
-import { useIsLoggedIn } from '../Auth/currnetUser.provider';
+import { useIsLoggedIn } from '../Auth/currnetUserProvider';
 import { DEFAULT_FEED_NAME, Feed, PERSONAL_FEED_NAME } from './Feed.type';
 import { Home } from './Home';
 import { context } from './HomeContext';
@@ -27,7 +28,7 @@ const PERSONAL_FEED: Feed = {
   value: PERSONAL_FEED_NAME
 };
 
-export const HomeContainer = () => {
+const _HomeContainer = () => {
   const dispatch = useDispatch();
   const tags = useSelector(selectTags);
   const articles = useSelector(selectVisibleArticles);
@@ -41,9 +42,7 @@ export const HomeContainer = () => {
   );
 
   const total = useSelector(
-    compose((meta: { total: number }) => {
-      return meta.total;
-    }, getSelectedFeedMeta)
+    compose((meta: { total: number }) => meta.total, getSelectedFeedMeta)
   );
 
   const selectFeed = useCallback(
@@ -91,18 +90,10 @@ export const HomeContainer = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    const feedToSelect = selectedTag
-      ? selectedTag
-      : isLoggedIn
-      ? PERSONAL_FEED_NAME
-      : DEFAULT_FEED_NAME;
-    selectFeed(feedToSelect);
-  }, [feeds, dispatch, isLoggedIn, selectedTag, selectFeed]);
-
-  useEffect(() => {
-    //todo fix typing
-    dispatch(homeSlice.actions.selectPage(1));
-  }, [selectedFeed, dispatch]);
+    if (selectedTag) {
+      selectFeed(selectedTag);
+    }
+  }, [selectedTag, selectFeed]);
 
   useEffect(() => {
     dispatch(fetchArticles(selectedFeed, selectedPage));
@@ -127,3 +118,5 @@ export const HomeContainer = () => {
     </context.Provider>
   );
 };
+
+export const HomeContainer = withRouter(_HomeContainer);

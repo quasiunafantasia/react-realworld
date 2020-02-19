@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { useCurrentUser } from '../../../Auth/currnetUser.provider';
+import { useCurrentUser } from '../../../Auth/currnetUserProvider';
 import { Comment } from '../../../entities/types/comment';
 import { AddComment } from './AddComment';
 import { ArticleComment } from './ArticleComment';

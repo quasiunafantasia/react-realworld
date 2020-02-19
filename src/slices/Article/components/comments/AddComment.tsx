@@ -1,5 +1,5 @@
 import React, { FC, SyntheticEvent, useRef } from 'react';
-import { useCurrentUser } from '../../../Auth/currnetUser.provider';
+import { useCurrentUser } from '../../../Auth/currnetUserProvider';
 import { ArticleCommentLayout } from './ArticleCommentLayout';
 
 export const AddComment: FC<{ onSubmit: (text: string) => any }> = ({
