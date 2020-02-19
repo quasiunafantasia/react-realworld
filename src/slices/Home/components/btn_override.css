@@ -1,0 +1,6 @@
+.btn-outline-primary.override:focus {
+  color: #5cb85c;
+  background-image: none;
+  background-color: transparent;
+  border-color: #5cb85c;
+}

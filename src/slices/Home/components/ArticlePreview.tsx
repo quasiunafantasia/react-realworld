@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Article } from '../../entities/types/article';
 import classNames from 'classnames';
 import { context } from '../HomeContext';
+import './btn_override.css';
 
 export const ArticlePreview: FC<{ article: Article }> = ({ article }) => {
   const { favoriteArticle } = useContext(context);
@@ -23,7 +24,7 @@ export const ArticlePreview: FC<{ article: Article }> = ({ article }) => {
         </div>
         <button
           className={classNames(
-            'btn btn-sm pull-xs-right',
+            'btn btn-sm pull-xs-right override',
             article.favorited ? 'btn-primary' : 'btn-outline-primary'
           )}
           onClick={e => {
