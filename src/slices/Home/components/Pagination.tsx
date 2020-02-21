@@ -1,20 +1,34 @@
 import React, { useMemo, MouseEvent, FC } from 'react';
 
+type WithTotal = { total: number; perPage: number };
+type WithTotalPages = { totalPages: number };
+
+type Total = WithTotal | WithTotalPages;
+
+export const calculatePages = (items: number, pageSize: number) =>
+  Math.ceil(items / pageSize);
+
 export const Pagination: FC<{
   activePage: number;
   selectPage: Function;
-  totalPages: number;
-}> = ({ activePage, selectPage, totalPages }) => {
+} & Total> = ({ activePage, selectPage, ...props }) => {
+  let total: number;
+
+  if ('total' in props) {
+    total = calculatePages(props.total, props.perPage);
+  } else {
+    total = props.totalPages;
+  }
+
   const pages = useMemo(
     () =>
-      Array(totalPages)
+      Array(total)
         .fill(0)
         .map((_, index) => index + 1),
-    [totalPages]
+    [total]
   );
 
-  //todo fix type
-  const createHandler = (page: any) => (e: MouseEvent) => {
+  const createHandler = (page: number) => (e: MouseEvent) => {
     e.stopPropagation();
     e.preventDefault();
     selectPage(page);

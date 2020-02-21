@@ -1,5 +1,6 @@
 import { FC, useContext } from 'react';
 import * as React from 'react';
+import { useIsLoggedIn } from '../Auth/currnetUserProvider';
 import { Article } from '../entities/types/article';
 import { Header } from './components/Header';
 import { FeedSelector } from './components/FeedSelector';
@@ -8,20 +9,18 @@ import { TagList } from './components/TagList';
 import { Pagination } from './components/Pagination';
 import { context } from './HomeContext';
 
-const calculatePages = (items: number, pageSize: number) =>
-  Math.ceil(items / pageSize);
-
 export const Home: FC<{ articles: Article[] }> = ({ articles }) => {
   const {
     tags,
     selectTag,
     selectedPage,
     selectPage,
-    feeds,
     selectedFeed,
     selectFeed,
+    selectedTag,
     total
   } = useContext(context);
+  const isLoggedIn = useIsLoggedIn();
   const noop = () => {};
   return (
     <div className="home-page">
@@ -30,9 +29,10 @@ export const Home: FC<{ articles: Article[] }> = ({ articles }) => {
         <div className="row">
           <div className="col-md-9">
             <FeedSelector
-              feeds={feeds || []}
               selectedFeed={selectedFeed}
               selectFeed={selectFeed || noop}
+              isLoggedIn={isLoggedIn}
+              selectedTag={selectedTag}
             />
 
             {articles.map(article => (
@@ -40,9 +40,10 @@ export const Home: FC<{ articles: Article[] }> = ({ articles }) => {
             ))}
 
             <Pagination
+              total={total || 0}
+              perPage={20}
               activePage={selectedPage || 1}
               selectPage={selectPage || noop}
-              totalPages={calculatePages(total || 0, 20)}
             />
           </div>
 

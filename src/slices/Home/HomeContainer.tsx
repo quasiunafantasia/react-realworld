@@ -1,11 +1,9 @@
 import { compose } from '@reduxjs/toolkit';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router';
 import { RootState } from '../../store';
 import { Maybe } from '../../utils/types/Maybe';
-import { useIsLoggedIn } from '../Auth/currnetUserProvider';
-import { DEFAULT_FEED_NAME, Feed, PERSONAL_FEED_NAME } from './Feed.type';
 import { Home } from './Home';
 import { context } from './HomeContext';
 import { selectVisibleArticles } from './redux/home.selectors';
@@ -18,21 +16,10 @@ import {
 
 const selectTags = (state: RootState) => state.entities.tags;
 
-const DEFAULT_FEED: Feed = {
-  name: 'Global feed',
-  value: DEFAULT_FEED_NAME
-};
-
-const PERSONAL_FEED: Feed = {
-  name: 'Your feed',
-  value: PERSONAL_FEED_NAME
-};
-
 const _HomeContainer = () => {
   const dispatch = useDispatch();
   const tags = useSelector(selectTags);
   const articles = useSelector(selectVisibleArticles);
-  const isLoggedIn = useIsLoggedIn();
 
   const selectedFeed = useSelector(
     (state: RootState) => state.home.selectedFeedName
@@ -68,23 +55,6 @@ const _HomeContainer = () => {
 
   const [selectedTag, selectTag] = useState<Maybe<string>>();
 
-  const feeds = useMemo<Feed[]>(() => {
-    const feedsDraft: Feed[] = [];
-
-    if (isLoggedIn) {
-      feedsDraft.push(PERSONAL_FEED);
-    }
-
-    feedsDraft.push(DEFAULT_FEED);
-
-    if (selectedTag) {
-      const tagFeed = { name: selectedTag, value: selectedTag };
-      feedsDraft.push(tagFeed);
-    }
-
-    return feedsDraft;
-  }, [selectedTag, isLoggedIn]);
-
   useEffect(() => {
     dispatch(fetchTags());
   }, [dispatch]);
@@ -102,7 +72,6 @@ const _HomeContainer = () => {
   return (
     <context.Provider
       value={{
-        feeds,
         tags,
         selectedPage,
         selectPage,
