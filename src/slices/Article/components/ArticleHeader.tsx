@@ -1,9 +1,7 @@
-import React, { useContext } from 'react';
-import { articleContext } from '../ArticleContext';
+import React, { FC } from 'react';
+import { Article } from '../../entities/types/article';
 
-export const ArticleHeader = () => {
-  const { article } = useContext(articleContext);
-
+export const ArticleHeader: FC<{ article: Article }> = ({ article }) => {
   return (
     <div className="banner">
       <div className="container">

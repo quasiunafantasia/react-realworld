@@ -1,9 +1,7 @@
-import React, { useContext } from 'react';
-import { articleContext } from '../ArticleContext';
+import React, { FC } from 'react';
+import { Article } from '../../entities/types/article';
 
-export const ArticleFooter = () => {
-  const { article } = useContext(articleContext);
-
+export const ArticleFooter: FC<{ article: Article }> = ({ article }) => {
   return (
     <div className="article-meta">
       <a href="profile.html">

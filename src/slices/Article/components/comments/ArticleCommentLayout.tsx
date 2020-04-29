@@ -6,14 +6,8 @@ export const ArticleCommentLayout: FC<{
 }> = ({ footer, body }) => {
   return (
     <div className="card">
-      <div className="card-block">
-        {body}
-        {/*{body || <DefaultCommentBody comment={ comment }/>}*/}
-      </div>
-      <div className="card-footer">
-        {footer}
-        {/*{footer || <DefaultCommentFooter comment={ comment }/>}*/}
-      </div>
+      <div className="card-block">{body}</div>
+      <div className="card-footer">{footer}</div>
     </div>
   );
 };

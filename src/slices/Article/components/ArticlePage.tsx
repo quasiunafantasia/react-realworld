@@ -1,42 +1,37 @@
-import React from 'react';
-import { articleContext } from '../ArticleContext';
+import React, { FC } from 'react';
+import { Article } from '../../entities/types/article';
+import { Comment } from '../../entities/types/comment';
 import { ArticleComments } from './comments/ArticleComments';
 import { ArticleFooter } from './ArticleFooter';
 import { ArticleHeader } from './ArticleHeader';
 
-//todo add type
-// @ts-ignore
-export const ArticlePage = ({ article, comments }) => {
+export const ArticlePage: FC<{ article: Article; comments: Comment[] }> = ({
+  article,
+  comments
+}) => {
   return (
-    <articleContext.Provider
-      value={{
-        article: article || { author: {} },
-        comments
-      }}
-    >
-      <div className="article-page">
-        <ArticleHeader />
-        <div className="container page">
-          <div className="row article-content">
-            <div className="col-md-12">
-              {/* todo as html */}
-              {article && article.body}
-            </div>
+    <div className="article-page">
+      <ArticleHeader article={article} />
+      <div className="container page">
+        <div className="row article-content">
+          <div className="col-md-12">
+            {/* todo as html */}
+            {article && article.body}
           </div>
+        </div>
 
-          <hr />
+        <hr />
 
-          <div className="article-actions">
-            <ArticleFooter />
-          </div>
+        <div className="article-actions">
+          <ArticleFooter article={article} />
+        </div>
 
-          <div className="row">
-            <div className="col-xs-12 col-md-8 offset-md-2">
-              <ArticleComments comments={comments || ([] as any)} />
-            </div>
+        <div className="row">
+          <div className="col-xs-12 col-md-8 offset-md-2">
+            <ArticleComments comments={comments || ([] as any)} />
           </div>
         </div>
       </div>
-    </articleContext.Provider>
+    </div>
   );
 };

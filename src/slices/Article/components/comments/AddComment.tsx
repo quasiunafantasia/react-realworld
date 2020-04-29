@@ -23,7 +23,6 @@ export const AddComment: FC<{ onSubmit: (text: string) => any }> = ({
 
   const footer = (
     <>
-      {' '}
       <img src={currentUser?.image} className="comment-author-img" alt="" />
       <button className="btn btn-sm btn-primary">Post Comment</button>
     </>

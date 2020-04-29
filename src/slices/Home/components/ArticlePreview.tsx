@@ -1,13 +1,14 @@
-import { FC, useContext } from 'react';
+import { FC } from 'react';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { Article } from '../../entities/types/article';
 import classNames from 'classnames';
-import { context } from '../HomeContext';
 import './btn_override.css';
 
-export const ArticlePreview: FC<{ article: Article }> = ({ article }) => {
-  const { favoriteArticle } = useContext(context);
+export const ArticlePreview: FC<{
+  article: Article;
+  onFavoriteArticle: Function;
+}> = ({ article, onFavoriteArticle }) => {
   return (
     <div className="article-preview">
       <div className="article-meta">
@@ -29,9 +30,7 @@ export const ArticlePreview: FC<{ article: Article }> = ({ article }) => {
           )}
           onClick={e => {
             e.preventDefault();
-            if (favoriteArticle) {
-              favoriteArticle(article.slug, !article.favorited);
-            }
+            onFavoriteArticle();
           }}
         >
           <i className="ion-heart" />
